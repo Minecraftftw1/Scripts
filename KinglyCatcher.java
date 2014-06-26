@@ -18,7 +18,7 @@ import java.util.Random;
  * Copyright (c) $today.year.
  */
 
-@ScriptManifest(author = "Kingly Catcher", category = Category.OTHER, description = "Hunts kingly implings and banks them for great profit. Start script with butterfly net equipped and at least 1m in inventory.", name = "Kingly Catcher", servers = { "PKhonor" }, version = 1.0)
+@ScriptManifest(author = "Minecraftftw", category = Category.OTHER, description = "Hunts kingly implings and banks them for great profit. Start script with butterfly net equipped and at least 1m in inventory.", name = "Kingly Catcher", servers = { "PKhonor" }, version = 1.0)
 public class KinglyCatcher extends Script{
 
 	private final ArrayList<Strategy> strategies = new ArrayList<Strategy>();
