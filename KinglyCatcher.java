@@ -31,7 +31,7 @@ public class KinglyCatcher extends Script{
 
     private int impsCaught = 0;
 
-	private final ArrayList<Strategy> strategies = new ArrayList<Strategy>();
+    private final ArrayList<Strategy> strategies = new ArrayList<Strategy>();
 
     @Override
     public boolean onExecute() {
@@ -41,7 +41,7 @@ public class KinglyCatcher extends Script{
         strategies.add(new Action());
         strategies.add(new TeleToBank());
         strategies.add(new Bank());
-    	provide(strategies);
+        provide(strategies);
         return true;  
     }
 
@@ -236,10 +236,10 @@ public class KinglyCatcher extends Script{
             System.out.println("Interacting");
 
             kinglyImp.interact(0);
-            Time.sleep(400, 600);
+            Time.sleep(100, 200);
 
             long startTime = System.currentTimeMillis();
-            long waitTime = 3500;
+            long waitTime = 2500;
             long endTime = startTime + waitTime;
 
             while (System.currentTimeMillis() < endTime) {
@@ -251,14 +251,16 @@ public class KinglyCatcher extends Script{
             }
 
             if (playerIsCatching) {
-                System.out.println("Player is catching SleepCondition activated.");
-                Time.sleep(new SleepCondition() {
-                
-                    @Override
-                    public boolean isValid() {
-                        return Inventory.getCount(FULL_JARS) > START_IMP_COUNT;
-                    }
-                }, 8200);
+                if (Players.getMyPlayer().getAnimation() != -1) {
+                    System.out.println("Player is catching SleepCondition activated.");
+                    Time.sleep(new SleepCondition() {
+                    
+                        @Override
+                        public boolean isValid() {
+                            return Inventory.getCount(FULL_JARS) > START_IMP_COUNT;
+                        }
+                    }, 8200);
+                }
             }
         }
     }
