@@ -595,11 +595,19 @@ public class mCombat extends Script {
                 BufferedReader lineReader = new BufferedReader(new FileReader("npcList.txt"));
                 // for (String line : lineReader.readLine()) {
                 String line;
+        public static void loadNpc() {
+            Npc[] loadListObj = Npcs.getNearest();
+            npcListStr.clear();
+            System.out.println("Working Directory = " + System.getProperty("user.dir"));
+            try {
+                BufferedReader lineReader = new BufferedReader(new FileReader("npcList.txt"));
+                // for (String line : lineReader.readLine()) {
+                String line;
                 while ((line = lineReader.readLine()) != null) {
                     for (int i = 0; i < loadListObj.length; i++) {
-                        int idEndPosition = line.indexOf(" -");
+                        int idStartPosition = line.indexOf(" -");
                         if (line.substring(0, idStartPosition).equals(String.valueOf(loadListObj[i].getDef().getId()))) {
-                            int nameEndPosition = line.indexOf("- ") + "- ".length();
+                            int nameStartPosition = line.indexOf("- ") + "- ".length();
                             String nameOfNpc = line.substring(nameStartPosition);
                             npcListStr.add(nameOfNpc + " - (" + loadListObj[i].getDef().getId() + ")");
                         }
