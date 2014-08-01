@@ -597,9 +597,9 @@ public class mCombat extends Script {
                 String line;
                 while ((line = lineReader.readLine()) != null) {
                     for (int i = 0; i < loadListObj.length; i++) {
-                        int idStartPosition = line.indexOf(" -");
+                        int idEndPosition = line.indexOf(" -");
                         if (line.substring(0, idStartPosition).equals(String.valueOf(loadListObj[i].getDef().getId()))) {
-                            int nameStartPosition = line.indexOf("- ") + "- ".length();
+                            int nameEndPosition = line.indexOf("- ") + "- ".length();
                             String nameOfNpc = line.substring(nameStartPosition);
                             npcListStr.add(nameOfNpc + " - (" + loadListObj[i].getDef().getId() + ")");
                         }
