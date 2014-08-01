@@ -593,7 +593,6 @@ public class mCombat extends Script {
             System.out.println("Working Directory = " + System.getProperty("user.dir"));
             try {
                 BufferedReader lineReader = new BufferedReader(new FileReader("npcList.txt"));
-                // for (String line : lineReader.readLine()) {
                 String line;
                 while ((line = lineReader.readLine()) != null) {
                     for (int i = 0; i < loadListObj.length; i++) {
