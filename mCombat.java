@@ -30,10 +30,10 @@ public class mCombat extends Script {
 
     private final ArrayList < Strategy > strategies = new ArrayList < Strategy > ();
 
-    public static Set < String > npcListStr = new HashSet < String > ();
-    public static Set < String > lootListStr = new HashSet < String > ();
-    public static final int[] npcIds = new int[30];
-    public static final int[] lootIds = new int[30];
+    private static Set < String > npcListStr = new HashSet < String > ();
+    private static Set < String > lootListStr = new HashSet < String > ();
+    private static final int[] npcIds = new int[30];
+    private static final int[] lootIds = new int[30];
 
     BotGUI startPanel = new BotGUI();
 
