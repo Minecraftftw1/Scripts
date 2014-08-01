@@ -1,4 +1,4 @@
-package Minecraftftw.combat;
+package Minecraftftw.mCombat;
 
 import java.awt.Component;
 import java.awt.PopupMenu;
