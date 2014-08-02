@@ -25,7 +25,7 @@ import java.io.*;
 
 @ScriptManifest(author = "MinecraftFtw", category = Category.COMBAT, description = "AIO Combat script.", name = "mCombat", servers = {
     "Ikov"
-}, version = 1.0)
+}, version = 1.1)
 public class mCombat extends Script {
 
     private final ArrayList < Strategy > strategies = new ArrayList < Strategy > ();
@@ -205,7 +205,7 @@ public class mCombat extends Script {
         try {
             GroundItem[] lootList = GroundItems.getNearest(lootIds);
             for (GroundItem toLoot : lootList) {
-                if (toLoot != null) {
+                if (toLoot != null && Calculations.distanceTo(toLoot.getLocation()) < 12) {
                     return toLoot;
                 }
             }
