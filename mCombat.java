@@ -88,7 +88,7 @@ public class mCombat extends Script {
                 public boolean isValid() {
                     return Players.getMyPlayer().isInCombat();
                 }
-            }, 3500);
+            }, 4250);
 
             Time.sleep(new SleepCondition() {
 
@@ -179,7 +179,7 @@ public class mCombat extends Script {
                 public boolean isValid() {
                     return Inventory.getCount(true, toLoot.getId()) > startCount;
                 }
-            }, 2000);
+            }, 2500);
 
         }
 
