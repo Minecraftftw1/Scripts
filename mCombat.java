@@ -25,7 +25,7 @@ import java.io.*;
 
 @ScriptManifest(author = "MinecraftFtw", category = Category.COMBAT, description = "AIO Combat script.", name = "mCombat", servers = {
     "Ikov"
-}, version = 1.1)
+}, version = 1.2)
 public class mCombat extends Script {
 
     private final ArrayList < Strategy > strategies = new ArrayList < Strategy > ();
