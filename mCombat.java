@@ -88,13 +88,15 @@ public class mCombat extends Script {
                 public boolean isValid() {
                     return Players.getMyPlayer().isInCombat();
                 }
-            }, 4250);
+            }, 5050);
+
+            Time.sleep(400, 550);
 
             Time.sleep(new SleepCondition() {
 
                 @Override
                 public boolean isValid() {
-                    return !Players.getMyPlayer().isInCombat();
+                    return !enemy.isInCombat();
                 }
             }, 10000);
         }
@@ -134,14 +136,14 @@ public class mCombat extends Script {
 
             for (Item food : Inventory.getItems(food)) {
                 currentHP = Players.getMyPlayer().getHealth();
-                if (currentHP != 0) {
+                if (currentHP != 0 && Players.getMyPlayer().isInCombat()) {
 
                     eatPoints = (int)((levelOfHP / 10) * 6); 
 
                     if (food != null && currentHP <= eatPoints) {
                         System.out.println("Found food! Eating it.");
                         Menu.sendAction(74, food.getId() - 1, food.getSlot(), 3214, 4);
-                        Time.sleep(3300, 3550);
+                        Time.sleep(3700, 3850);
                     }
                 }
             }
