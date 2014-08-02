@@ -82,23 +82,27 @@ public class mCombat extends Script {
 
             Time.sleep(700, 750);
 
+
             Time.sleep(new SleepCondition() {
 
                 @Override
                 public boolean isValid() {
-                    return Players.getMyPlayer().isInCombat();
+                    return Players.getMyPlayer().isInCombat() || Players.getMyPlayer().getAnimation() != -1 && enemy.isInCombat() && !Players.getMyPlayer().isInCombat();
                 }
             }, 5050);
 
-            Time.sleep(400, 550);
+            Time.sleep(1800, 2050);
 
-            Time.sleep(new SleepCondition() {
+            if (enemy.isInCombat() && Players.getMyPlayer().isInCombat()) {
 
-                @Override
-                public boolean isValid() {
-                    return !enemy.isInCombat();
-                }
-            }, 10000);
+                Time.sleep(new SleepCondition() {
+
+                    @Override
+                    public boolean isValid() {
+                        return !enemy.isInCombat();
+                    }
+                }, 10000);
+            }
         }
     }
 
