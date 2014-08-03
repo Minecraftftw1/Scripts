@@ -25,7 +25,7 @@ import java.io.*;
 
 @ScriptManifest(author = "MinecraftFtw", category = Category.COMBAT, description = "AIO Combat script.", name = "mCombat", servers = {
     "Ikov"
-}, version = 1.2)
+}, version = 1.1)
 public class mCombat extends Script {
 
     private final ArrayList < Strategy > strategies = new ArrayList < Strategy > ();
@@ -82,7 +82,6 @@ public class mCombat extends Script {
 
             Time.sleep(700, 750);
 
-
             Time.sleep(new SleepCondition() {
 
                 @Override
@@ -112,7 +111,7 @@ public class mCombat extends Script {
         private int levelOfHP;
         private int eatPoints;
 
-        private final int[] food = {
+        private final int[] foodList = {
             7943, 7944, 7947, 6970, 386, 14617, 3145, 3148, 392, 380, 330, 316, 374, 362
         };
 
@@ -138,7 +137,7 @@ public class mCombat extends Script {
         @Override
         public void execute() {
 
-            for (Item food : Inventory.getItems(food)) {
+            for (Item food : Inventory.getItems(foodList)) {
                 currentHP = Players.getMyPlayer().getHealth();
                 if (currentHP != 0 && Players.getMyPlayer().isInCombat()) {
 
@@ -173,7 +172,7 @@ public class mCombat extends Script {
 
             System.out.println("Looting.");
 
-            int startCount = Inventory.getCount(true, toLoot.getId());
+            final int startCount = Inventory.getCount(true, toLoot.getId());
 
             toLoot.take();
 
