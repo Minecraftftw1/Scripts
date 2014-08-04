@@ -1,7 +1,5 @@
 package Minecraftftw.mCombat;
 
-import java.awt.Component;
-import java.awt.PopupMenu;
 import javax.swing.DefaultListModel;
 
 import org.parabot.environment.scripts.framework.*;
@@ -14,6 +12,7 @@ import org.rev317.min.api.methods.*;
 import org.rev317.min.api.wrappers.*;
 import org.parabot.environment.api.utils.*;
 import org.parabot.environment.input.*;
+import org.parabot.environment.api.interfaces.Paintable;
 import org.rev317.min.Loader;
 import java.util.Random;
 
@@ -22,11 +21,22 @@ import javax.swing.*;
 import java.util.*;
 
 import java.io.*;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.net.URL;
+import java.text.DecimalFormat;
 
 @ScriptManifest(author = "MinecraftFtw", category = Category.COMBAT, description = "AIO Combat script.", name = "mCombat", servers = {
     "Ikov"
 }, version = 1.5)
-public class mCombat extends Script {
+public class mCombat extends Script implements Paintable {
 
     private final ArrayList < Strategy > strategies = new ArrayList < Strategy > ();
 
@@ -34,6 +44,21 @@ public class mCombat extends Script {
     private static Set < String > lootListStr = new HashSet < String > ();
     private static final int[] npcIds = new int[30];
     private static final int[] lootIds = new int[30];
+
+    private static String status = "Starting.";
+    private final int startHpLevel = Skill.HITPOINTS.getRealLevel();
+    private final int startAttackLevel = Skill.ATTACK.getRealLevel();
+    private final int startStrengthLevel = Skill.STRENGTH.getRealLevel();
+    private final int startDefenceLevel = Skill.DEFENSE.getRealLevel();
+    private final int startRangeLevel = Skill.RANGE.getRealLevel();
+    private final int startMagicLevel = Skill.MAGIC.getRealLevel();
+
+    private final int startHpExp = Skill.HITPOINTS.getExperience();
+    private final int startAttackExp = Skill.ATTACK.getExperience();
+    private final int startStrengthExp = Skill.STRENGTH.getExperience();
+    private final int startDefenceExp = Skill.DEFENSE.getExperience();
+    private final int startRangeExp = Skill.RANGE.getExperience();
+    private final int startMagicExp = Skill.MAGIC.getExperience();
 
     BotGUI startPanel = new BotGUI();
 
@@ -56,6 +81,120 @@ public class mCombat extends Script {
 
     }
 
+    //START: Code generated using Enfilade's Easel
+    private final RenderingHints antialiasing = new RenderingHints(
+            RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+    private Image getImage(String url) {
+        try {
+            return ImageIO.read(new URL(url));
+        } catch(IOException e) {
+            return null;
+        }
+    }
+
+    private final long startTime = System.currentTimeMillis();
+
+    private String getTime() {
+        DecimalFormat df = new DecimalFormat("00");
+        final long millis = System.currentTimeMillis() - startTime;
+        final long second = (millis / 1000) % 60;
+        final long minute = (millis / (1000 * 60)) % 60;
+        final long hour = (millis / (1000 * 60 * 60)) % 24;
+        return df.format(hour) + ":" + df.format(minute) + ":" + df.format(second);
+    }
+
+    private String getGainedLevels() {
+        int totalLevels = 0;
+        // final int hpGained = Skill.HITPOINTS.getRealLevel() - startHpLevel;
+        final int hpGained = Skill.HITPOINTS.getRealLevel();
+        if (hpGained > 99 == false) {
+            totalLevels += hpGained - startHpLevel;
+        }
+        final int attGained = Skill.ATTACK.getRealLevel();
+        if (attGained > 99 == false) {
+            totalLevels += attGained - startAttackLevel;
+        }
+        final int strGained = Skill.STRENGTH.getRealLevel();
+        if (strGained > 99 == false) {
+            totalLevels += strGained - startStrengthLevel;
+        }
+        final int defGained = Skill.DEFENSE.getRealLevel();
+        if (defGained > 99 == false) {
+            totalLevels += defGained - startDefenceLevel;
+        }
+        final int rangGained = Skill.RANGE.getRealLevel();
+        if (rangGained > 99 == false) {
+            totalLevels += rangGained - startRangeLevel;
+        }
+        final int magGained = Skill.MAGIC.getRealLevel();
+        if (magGained > 99 == false) {
+            totalLevels += magGained - startMagicLevel;
+        }
+        return String.valueOf(totalLevels);
+    }
+
+    private String getXpGained() {
+        int totalXpGained = 0;
+        final int hpGained = Skill.HITPOINTS.getExperience() - startHpExp;
+        totalXpGained += hpGained;
+        final int attGained = Skill.ATTACK.getExperience() - startAttackExp;
+        totalXpGained += attGained;
+        final int strGained = Skill.STRENGTH.getExperience() - startStrengthExp;
+        totalXpGained += strGained;
+        final int defGained = Skill.DEFENSE.getExperience() - startDefenceExp;
+        totalXpGained += defGained;
+        final int rangGained = Skill.RANGE.getExperience() - startRangeExp;
+        totalXpGained += rangGained;
+        final int magGained = Skill.MAGIC.getExperience() - startMagicExp;
+        totalXpGained += magGained;
+        return String.valueOf(totalXpGained);
+
+    }
+
+    private String getXpPerHour() {
+        final int gainedXp = Integer.parseInt(getXpGained());
+        DecimalFormat df = new DecimalFormat("00");
+        final long millis = System.currentTimeMillis() - startTime;
+        final long second = millis / 1000;
+        final long xpPerHour = ((gainedXp / second) * 60) * 60;
+        return df.format(xpPerHour);
+
+    }
+
+    // private String 
+
+    private final Color color1 = new Color(255, 255, 255);
+
+    private final Font font1 = new Font("Arial", 0, 13);
+    private final Font font2 = new Font("Arial", 0, 12);
+    private final Font font3 = new Font("Arial", 0, 15);
+
+    private final Image img1 = getImage("http://i.imgur.com/YeAvokx.png");
+
+    public void paint(Graphics g1) {
+
+        String currentTime = getTime();
+        String gainedLevels = getGainedLevels();
+        String gainedXp = getXpGained();
+        String xpPerHour = getXpPerHour();
+
+        Graphics2D g = (Graphics2D)g1;
+        g.setRenderingHints(antialiasing);
+
+        g.drawImage(img1, 2, 336, null);
+        g.setFont(font1);
+        g.setColor(color1);
+        g.drawString("Running for: " + currentTime, 11, 450);
+        g.setFont(font2);
+        g.drawString("Total XP Gained: " + gainedXp, 310, 450);
+        g.setFont(font3);
+        g.drawString("Status: " + status, 11, 413);
+        g.drawString("Levels gained: " + gainedLevels, 390, 413);
+        g.drawString("XP per hour: " + xpPerHour, 197, 413);
+    }
+    //END: Code generated using Enfilade's Easel
+
     public class Fight implements Strategy {
 
         Npc enemy;
@@ -76,7 +215,7 @@ public class mCombat extends Script {
         @Override
         public void execute() {
 
-            System.out.println("Attacking enemy.");
+            status = "Attacking enemy";
 
             enemy.interact(1);
 
@@ -144,7 +283,7 @@ public class mCombat extends Script {
                     eatPoints = (int)((levelOfHP / 10) * 6); 
 
                     if (food != null && currentHP <= eatPoints) {
-                        System.out.println("Found food! Eating it.");
+                        status = "Eating.";
                         Menu.sendAction(74, food.getId() - 1, food.getSlot(), 3214, 4);
                         Time.sleep(3700, 3850);
                     }
@@ -170,7 +309,7 @@ public class mCombat extends Script {
         @Override
         public void execute() {
 
-            System.out.println("Looting.");
+            status = "Looting.";
 
             final int startCount = Inventory.getCount(true, toLoot.getId());
 
@@ -572,14 +711,14 @@ public class mCombat extends Script {
                     int startPosition = fightListString.indexOf("- (") + "- (".length();
                     int endPosition = fightListString.indexOf(")", startPosition);
                     npcIds[i] = Integer.parseInt(fightListString.substring(startPosition, endPosition));
-                    System.out.println("NPC ID from startButtonActionPerformed: " + String.valueOf(Integer.parseInt(fightListString.substring(startPosition, endPosition))));
+                    // System.out.println("NPC ID from startButtonActionPerformed: " + String.valueOf(Integer.parseInt(fightListString.substring(startPosition, endPosition))));
                 }
             }
             for (int l = 0; l < lootList.getModel().getSize(); l++) {
                 String lootListString = lootListModel.getElementAt(l).toString();
                 if (lootListString != null) {
                     lootIds[l] = Integer.parseInt(lootListString) - 1;
-                    System.out.println("Loot ID from startButtonActionPerformed: " + String.valueOf(lootIds[l]));
+                    // System.out.println("Loot ID from startButtonActionPerformed: " + String.valueOf(lootIds[l]));
                 }
             }
         } //GEN-LAST:event_startButtonActionPerformed
@@ -783,11 +922,11 @@ public class mCombat extends Script {
                     for (int i = 0; i < npcIds.length; i++) {
                         npcIds[i] = 0;
                     }
-                    System.out.println("Cleared id's");
+                    // System.out.println("Cleared id's");
                 }
                 for (String item : npcListStr) {
                     nearestNpcListModel.addElement(item);
-                    System.out.println("Adding to loaded: " + item);
+                    // System.out.println("Adding to loaded: " + item);
                 }
             } catch (Exception e) {
                 String text = "Could not add nearest Npc's to list.";
