@@ -25,7 +25,7 @@ import java.io.*;
 
 @ScriptManifest(author = "MinecraftFtw", category = Category.COMBAT, description = "AIO Combat script.", name = "mCombat", servers = {
     "Ikov"
-}, version = 1.2)
+}, version = 1.5)
 public class mCombat extends Script {
 
     private final ArrayList < Strategy > strategies = new ArrayList < Strategy > ();
@@ -240,33 +240,44 @@ public class mCombat extends Script {
         DefaultListModel fightListModel = new DefaultListModel(); 
         DefaultListModel nearestNpcListModel = new DefaultListModel();
         DefaultListModel lootListModel = new DefaultListModel();
+        DefaultListModel savesListModel = new DefaultListModel();
 
         @SuppressWarnings("unchecked")
-        // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+        // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
         private void initComponents() {
 
             tabPane = new javax.swing.JTabbedPane();
             mainPanel = new javax.swing.JPanel();
             npcTitle = new javax.swing.JLabel();
-            jScrollPane2 = new javax.swing.JScrollPane();
+            loadedScrollPane = new javax.swing.JScrollPane();
             loadedList = new javax.swing.JList(nearestNpcListModel);
             moveButton = new javax.swing.JButton();
             removeButton = new javax.swing.JButton();
             loadedLabel = new javax.swing.JLabel();
             fightLabel = new javax.swing.JLabel();
             reloadButton = new javax.swing.JButton();
-            jScrollPane3 = new javax.swing.JScrollPane();
-            fightList = new javax.swing.JList(fightListModel); 
+            npcFightListScrollPane = new javax.swing.JScrollPane();
+            fightList = new javax.swing.JList(fightListModel);
             startButton = new javax.swing.JButton();
-            jLabel2 = new javax.swing.JLabel();
+            npcSubtitle = new javax.swing.JLabel();
             lootPanel = new javax.swing.JPanel();
-            npcTitle1 = new javax.swing.JLabel();
-            jScrollPane4 = new javax.swing.JScrollPane();
+            lootTitle = new javax.swing.JLabel();
+            lootScrollPane = new javax.swing.JScrollPane();
             lootList = new javax.swing.JList(lootListModel);
             lootItemField = new javax.swing.JTextField();
             addLootButton = new javax.swing.JButton();
             lootRemoveButton = new javax.swing.JButton();
-            jLabel1 = new javax.swing.JLabel();
+            lootSubtitle = new javax.swing.JLabel();
+            lootedPanelLabel = new javax.swing.JLabel();
+            loadPanel = new javax.swing.JPanel();
+            loadTitle = new javax.swing.JLabel();
+            loadSubtitle = new javax.swing.JLabel();
+            saveNameField = new javax.swing.JTextField();
+            saveButton = new javax.swing.JButton();
+            fileNameLabel = new javax.swing.JLabel();
+            savesScrollPanel = new javax.swing.JScrollPane();
+            savesList = new javax.swing.JList(savesListModel);
+            savesFoundLabel = new javax.swing.JLabel();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             setLocation(new java.awt.Point(450, 225));
@@ -278,7 +289,7 @@ public class mCombat extends Script {
             loadedList.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
             loadedList.setForeground(new java.awt.Color(0, 0, 0));
             loadedList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-            jScrollPane2.setViewportView(loadedList);
+            loadedScrollPane.setViewportView(loadedList);
 
             moveButton.setText("Move to fight list");
             moveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -309,7 +320,7 @@ public class mCombat extends Script {
             fightList.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
             fightList.setForeground(new java.awt.Color(0, 0, 0));
             fightList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-            jScrollPane3.setViewportView(fightList);
+            npcFightListScrollPane.setViewportView(fightList);
 
             startButton.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
             startButton.setText("Start!");
@@ -319,67 +330,69 @@ public class mCombat extends Script {
                 }
             });
 
-            jLabel2.setText("Press the start button to start the script when you are ready.");
+            npcSubtitle.setText("Press the start button to start the script when you are ready.");
 
             javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
             mainPanel.setLayout(mainPanelLayout);
             mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(loadedLabel)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addComponent(reloadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(startButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(removeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(fightLabel)))
-                .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(npcTitle)
-                .addComponent(jLabel2))
-                .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap()));
+                    .addContainerGap()
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(mainPanelLayout.createSequentialGroup()
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(loadedLabel)
+                                .addComponent(loadedScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(reloadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(moveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(startButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(removeButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(npcFightListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fightLabel)))
+                        .addGroup(mainPanelLayout.createSequentialGroup()
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(npcTitle)
+                                .addComponent(npcSubtitle))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap())
+            );
             mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addComponent(npcTitle)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(loadedLabel)
-                .addComponent(fightLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(moveButton)
-                .addComponent(removeButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(reloadButton)
-                .addComponent(startButton))
-                .addContainerGap()));
+                    .addContainerGap()
+                    .addComponent(npcTitle)
+                    .addGap(5, 5, 5)
+                    .addComponent(npcSubtitle)
+                    .addGap(18, 18, 18)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(fightLabel)
+                        .addComponent(loadedLabel))
+                    .addGap(18, 18, 18)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(npcFightListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                        .addComponent(loadedScrollPane))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(moveButton)
+                        .addComponent(removeButton))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(reloadButton)
+                        .addComponent(startButton))
+                    .addContainerGap())
+            );
 
             tabPane.addTab("Main", mainPanel);
 
-            npcTitle1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-            npcTitle1.setText("Enter items to loot:");
+            lootTitle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            lootTitle.setText("Enter items to loot:");
 
             lootList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-            jScrollPane4.setViewportView(lootList);
+            lootScrollPane.setViewportView(lootList);
 
-            addLootButton.setText("Add item");
+            addLootButton.setText("Add item(s)");
             addLootButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     addLootButtonActionPerformed(evt);
@@ -393,81 +406,147 @@ public class mCombat extends Script {
                 }
             });
 
-            jLabel1.setText("Integer ID's only! (Use debug to display id's)");
+            lootSubtitle.setText("Integer ID's only! (Use debug to display id's)");
+
+            lootedPanelLabel.setText("Items that will be looted:");
 
             javax.swing.GroupLayout lootPanelLayout = new javax.swing.GroupLayout(lootPanel);
             lootPanel.setLayout(lootPanelLayout);
             lootPanelLayout.setHorizontalGroup(
-            lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(lootPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
-                .addGroup(lootPanelLayout.createSequentialGroup()
-                .addComponent(lootItemField)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addLootButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(lootRemoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGroup(lootPanelLayout.createSequentialGroup()
-                .addComponent(npcTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(14, 14, 14)))
-                .addContainerGap()));
+                    .addContainerGap()
+                    .addGroup(lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(lootPanelLayout.createSequentialGroup()
+                            .addComponent(lootSubtitle)
+                            .addGap(247, 247, 247))
+                        .addGroup(lootPanelLayout.createSequentialGroup()
+                            .addGroup(lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(lootPanelLayout.createSequentialGroup()
+                                    .addComponent(lootItemField)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(addLootButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(lootPanelLayout.createSequentialGroup()
+                                    .addComponent(lootedPanelLabel)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(lootScrollPane)
+                                .addComponent(lootRemoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lootTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addContainerGap())))
+            );
             lootPanelLayout.setVerticalGroup(
-            lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(lootPanelLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(npcTitle1)
-                .addGap(2, 2, 2)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(lootItemField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(addLootButton, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lootRemoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                .addGap(20, 20, 20)));
+                    .addContainerGap()
+                    .addComponent(lootTitle)
+                    .addGap(2, 2, 2)
+                    .addComponent(lootSubtitle)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(lootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lootItemField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addLootButton, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lootedPanelLabel)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lootScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(lootRemoveButton)
+                    .addGap(20, 20, 20))
+            );
 
             tabPane.addTab("Loot", lootPanel);
+
+            loadTitle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+            loadTitle.setText("Load/Save custom presets");
+
+            loadSubtitle.setText("Load or save data you have entered previously.");
+
+            saveButton.setText("Save");
+            saveButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    saveButtonActionPerformed(evt);
+                }
+            });
+
+            fileNameLabel.setText("File name:");
+
+            savesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+            savesList.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseClicked(java.awt.event.MouseEvent evt) {
+                    saveListActionPerformed(evt);
+                }
+            });
+            savesScrollPanel.setViewportView(savesList);
+
+            savesFoundLabel.setText("Saves found in current folder (double click one to load):");
+
+            javax.swing.GroupLayout loadPanelLayout = new javax.swing.GroupLayout(loadPanel);
+            loadPanel.setLayout(loadPanelLayout);
+            loadPanelLayout.setHorizontalGroup(
+                loadPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loadPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(loadPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(loadPanelLayout.createSequentialGroup()
+                            .addComponent(saveNameField)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(savesScrollPanel)
+                        .addGroup(loadPanelLayout.createSequentialGroup()
+                            .addGroup(loadPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(loadTitle)
+                                .addComponent(loadSubtitle)
+                                .addComponent(fileNameLabel)
+                                .addComponent(savesFoundLabel))
+                            .addGap(0, 219, Short.MAX_VALUE)))
+                    .addContainerGap())
+            );
+            loadPanelLayout.setVerticalGroup(
+                loadPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(loadPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(loadTitle)
+                    .addGap(5, 5, 5)
+                    .addComponent(loadSubtitle)
+                    .addGap(18, 18, 18)
+                    .addComponent(fileNameLabel)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(loadPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(saveNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(saveButton, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(savesFoundLabel)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(savesScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(33, 33, 33))
+            );
+
+            tabPane.addTab("Load/Save", loadPanel);
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabPane)
-                .addContainerGap()));
+                    .addContainerGap()
+                    .addComponent(tabPane)
+                    .addContainerGap())
+            );
             layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                .addContainerGap()));
+                    .addContainerGap()
+                    .addComponent(tabPane)
+                    .addContainerGap())
+            );
 
             pack();
-            addNPCs();
-        } // </editor-fold>//GEN-END:initComponents
-
-        private void addNPCs() {
-            loadNpc();
-            nearestNpcListModel.clear();
-            if (npcIds.length > 0) {
-                for (int i = 0; i < npcIds.length; i++) {
-                    npcIds[i] = 0;
-                }
-                System.out.println("Cleared id's");
-            }
-            for (String item: npcListStr) {
-                nearestNpcListModel.addElement(item);
-                System.out.println("Adding to loaded: " + item);
-            }
-        }
+            addNpcs();
+            loadSaves();
+        }// </editor-fold> 
 
         private void reloadButtonActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_reloadButtonActionPerformed
-            addNPCs();
+            addNpcs();
         } //GEN-LAST:event_reloadButtonActionPerformed
 
         private void moveButtonActionPerformed(java.awt.event.ActionEvent evt) { //GEN-FIRST:event_moveButtonActionPerformed
@@ -537,8 +616,8 @@ public class mCombat extends Script {
                 }
                 for (String s: lootListStr) {
                     lootListModel.addElement(s);
-                    // System.out.println("Bot will loot: " + s);
                 }
+                lootItemField.setText("");
             }
         } //GEN-LAST:event_addLootButtonActionPerformed
 
@@ -556,6 +635,86 @@ public class mCombat extends Script {
                 }
             }
         } //GEN-LAST:event_lootRemoveButtonActionPerformed
+
+        private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
+            String fileName = saveNameField.getText();
+            String npcSaves[] = new String[fightList.getModel().getSize()];
+            String lootSaves[] = new String[lootList.getModel().getSize()];
+            
+            for (int i = 0; i < fightList.getModel().getSize(); i++) {
+                String fightListString = fightListModel.getElementAt(i).toString();
+                npcSaves[i] = fightListString;
+            }
+            
+            for (int i = 0; i < lootList.getModel().getSize(); i++) {
+                String lootListString = lootListModel.getElementAt(i).toString();
+                lootSaves[i] = lootListString;
+            }
+            
+            File saveFile = new File(fileName + ".mCmb");
+            
+            if (!saveFile.exists() && npcSaves.length > 0 || lootSaves.length > 0) {
+
+                try {
+                    saveFile.createNewFile();
+                    
+                    FileWriter fw = new FileWriter(saveFile.getAbsoluteFile());
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    if (npcSaves.length > 0) {
+                        for (String npcData : npcSaves) {
+                            bw.write("npc: " + npcData + "\n");
+                        }
+                    }
+                    if (lootSaves.length > 0) {
+                        for (String lootData : lootSaves) {
+                            bw.write("loot: " + lootData + "\n");
+                        }
+                    }
+                    bw.close();
+
+                    String text = "Saved file in current folder as: " + fileName + ".mCmb";
+                    JOptionPane.showMessageDialog(this, text, "Successful", JOptionPane.INFORMATION_MESSAGE);
+                    saveNameField.setText("");
+                    loadSaves();
+                } catch (IOException ex) {
+                    String text = "Couldn't save file!";
+                    JOptionPane.showMessageDialog(this, text, "Error", JOptionPane.ERROR_MESSAGE); 
+                }
+
+            } else {
+                String text = "You haven't entered any Loot id's or added any Npc's to the list to save!";
+                JOptionPane.showMessageDialog(this, text, "Save error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }
+
+        private void saveListActionPerformed(java.awt.event.MouseEvent evt) {
+            if (evt.getClickCount() == 2) {
+                try {
+                    BufferedReader lineReader = new BufferedReader(new FileReader(savesList.getSelectedValue().toString()));
+                    String line;
+                    fightListModel.clear();
+                    lootListModel.clear();
+                    while ((line = lineReader.readLine()) != null) {
+                        if (line.contains("npc: ")) {
+                            int npcStartPosition = line.indexOf("npc: ") + "npc: ".length();
+                            String nameOfNpc = line.substring(npcStartPosition);
+                            fightListModel.addElement(nameOfNpc);
+                        } else if (line.contains("loot: ")) {
+                            int lootStartPosition = line.indexOf("loot: ") + "loot: ".length();
+                            String lootID = line.substring(lootStartPosition);
+                            lootListModel.addElement(lootID);
+                        }
+                    }
+                    lineReader.close();
+                    String text = "Loaded data! Press start in the main tab to begin.";
+                    JOptionPane.showMessageDialog(this, text, "Saves loaded", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e) {
+                    String text = "Couldn't load save!";
+                    JOptionPane.showMessageDialog(this, text, "Load error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }    
 
         /**
          * @param args the command line arguments
@@ -592,10 +751,53 @@ public class mCombat extends Script {
             });
         }
 
+        private void loadSaves() {
+            try {
+                savesListModel.clear();
+
+                String nameOfDir = System.getProperty("user.dir");
+                File dir = new File(nameOfDir);
+                FilenameFilter textFilter = new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.toLowerCase().endsWith(".mcmb");
+                    }
+                };
+
+                File[] allFiles = dir.listFiles(textFilter);
+                for (File f : allFiles) {
+                    if (f.isFile()) {
+                        savesListModel.addElement(f.getName());
+                    }
+                }
+            } catch (Exception e) {
+                String text = "Could not load files in current folder.";
+                JOptionPane.showMessageDialog(this, text, "Save error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        private void addNpcs() {
+            loadNpc();
+            nearestNpcListModel.clear();
+            try {
+                if (npcIds.length > 0) {
+                    for (int i = 0; i < npcIds.length; i++) {
+                        npcIds[i] = 0;
+                    }
+                    System.out.println("Cleared id's");
+                }
+                for (String item : npcListStr) {
+                    nearestNpcListModel.addElement(item);
+                    System.out.println("Adding to loaded: " + item);
+                }
+            } catch (Exception e) {
+                String text = "Could not add nearest Npc's to list.";
+                JOptionPane.showMessageDialog(this, text, "Npc error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
         private void loadNpc() {
             Npc[] loadListObj = Npcs.getNearest();
             npcListStr.clear();
-            System.out.println("Working Directory = " + System.getProperty("user.dir"));
             try {
                 BufferedReader lineReader = new BufferedReader(new FileReader("npcList.txt"));
                 String line;
@@ -611,7 +813,8 @@ public class mCombat extends Script {
                 }
                 lineReader.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                String text = "Could not load nearest Npc's.";
+                JOptionPane.showMessageDialog(this, text, "Npc error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -619,23 +822,33 @@ public class mCombat extends Script {
         private javax.swing.JButton addLootButton;
         private javax.swing.JLabel fightLabel;
         private javax.swing.JList fightList;
-        private javax.swing.JLabel jLabel1;
-        private javax.swing.JLabel jLabel2;
-        private javax.swing.JScrollPane jScrollPane2;
-        private javax.swing.JScrollPane jScrollPane3;
-        private javax.swing.JScrollPane jScrollPane4;
+        private javax.swing.JLabel fileNameLabel;
+        private javax.swing.JPanel loadPanel;
+        private javax.swing.JLabel loadSubtitle;
+        private javax.swing.JLabel loadTitle;
         private javax.swing.JLabel loadedLabel;
         private javax.swing.JList loadedList;
+        private javax.swing.JScrollPane loadedScrollPane;
         private javax.swing.JTextField lootItemField;
         private javax.swing.JList lootList;
         private javax.swing.JPanel lootPanel;
         private javax.swing.JButton lootRemoveButton;
+        private javax.swing.JScrollPane lootScrollPane;
+        private javax.swing.JLabel lootSubtitle;
+        private javax.swing.JLabel lootTitle;
+        private javax.swing.JLabel lootedPanelLabel;
         private javax.swing.JPanel mainPanel;
         private javax.swing.JButton moveButton;
+        private javax.swing.JScrollPane npcFightListScrollPane;
+        private javax.swing.JLabel npcSubtitle;
         private javax.swing.JLabel npcTitle;
-        private javax.swing.JLabel npcTitle1;
         private javax.swing.JButton reloadButton;
         private javax.swing.JButton removeButton;
+        private javax.swing.JButton saveButton;
+        private javax.swing.JTextField saveNameField;
+        private javax.swing.JLabel savesFoundLabel;
+        private javax.swing.JList savesList;
+        private javax.swing.JScrollPane savesScrollPanel;
         private javax.swing.JButton startButton;
         private javax.swing.JTabbedPane tabPane;
         // End of variables declaration//GEN-END:variables
