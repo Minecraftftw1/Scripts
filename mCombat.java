@@ -35,7 +35,7 @@ import java.text.DecimalFormat;
 
 @ScriptManifest(author = "MinecraftFtw", category = Category.COMBAT, description = "AIO Combat script.", name = "mCombat", servers = {
     "Ikov"
-}, version = 1.5)
+}, version = 1.6)
 public class mCombat extends Script implements Paintable {
 
     private final ArrayList < Strategy > strategies = new ArrayList < Strategy > ();
