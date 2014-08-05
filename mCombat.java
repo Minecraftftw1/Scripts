@@ -46,19 +46,19 @@ public class mCombat extends Script implements Paintable {
     private static final int[] lootIds = new int[30];
 
     private static String status = "Starting.";
-    private final int startHpLevel = Skill.HITPOINTS.getRealLevel();
-    private final int startAttackLevel = Skill.ATTACK.getRealLevel();
-    private final int startStrengthLevel = Skill.STRENGTH.getRealLevel();
-    private final int startDefenceLevel = Skill.DEFENSE.getRealLevel();
-    private final int startRangeLevel = Skill.RANGE.getRealLevel();
-    private final int startMagicLevel = Skill.MAGIC.getRealLevel();
+    private final int START_HP_LEVEL = Skill.HITPOINTS.getRealLevel();
+    private final int START_ATTACK_LEVEL = Skill.ATTACK.getRealLevel();
+    private final int START_STRENGTH_LEVEL = Skill.STRENGTH.getRealLevel();
+    private final int START_DEFENCE_LEVEL = Skill.DEFENSE.getRealLevel();
+    private final int START_RANGE_LEVEL = Skill.RANGE.getRealLevel();
+    private final int START_MAGIC_LEVEL = Skill.MAGIC.getRealLevel();
 
-    private final int startHpExp = Skill.HITPOINTS.getExperience();
-    private final int startAttackExp = Skill.ATTACK.getExperience();
-    private final int startStrengthExp = Skill.STRENGTH.getExperience();
-    private final int startDefenceExp = Skill.DEFENSE.getExperience();
-    private final int startRangeExp = Skill.RANGE.getExperience();
-    private final int startMagicExp = Skill.MAGIC.getExperience();
+    private final int START_HP_EXP = Skill.HITPOINTS.getExperience();
+    private final int START_ATTACK_EXP = Skill.ATTACK.getExperience();
+    private final int START_STRENGTH_EXP = Skill.STRENGTH.getExperience();
+    private final int START_DEFENCE_EXP = Skill.DEFENSE.getExperience();
+    private final int START_RANGE_EXP = Skill.RANGE.getExperience();
+    private final int START_MAGIC_EXP = Skill.MAGIC.getExperience();
 
     BotGUI startPanel = new BotGUI();
 
@@ -106,47 +106,46 @@ public class mCombat extends Script implements Paintable {
 
     private String getGainedLevels() {
         int totalLevels = 0;
-        // final int hpGained = Skill.HITPOINTS.getRealLevel() - startHpLevel;
         final int hpGained = Skill.HITPOINTS.getRealLevel();
         if (hpGained > 99 == false) {
-            totalLevels += hpGained - startHpLevel;
+            totalLevels += hpGained - START_HP_LEVEL;
         }
         final int attGained = Skill.ATTACK.getRealLevel();
         if (attGained > 99 == false) {
-            totalLevels += attGained - startAttackLevel;
+            totalLevels += attGained - START_ATTACK_LEVEL;
         }
         final int strGained = Skill.STRENGTH.getRealLevel();
         if (strGained > 99 == false) {
-            totalLevels += strGained - startStrengthLevel;
+            totalLevels += strGained - START_STRENGTH_LEVEL;
         }
         final int defGained = Skill.DEFENSE.getRealLevel();
         if (defGained > 99 == false) {
-            totalLevels += defGained - startDefenceLevel;
+            totalLevels += defGained - START_DEFENCE_LEVEL;
         }
         final int rangGained = Skill.RANGE.getRealLevel();
         if (rangGained > 99 == false) {
-            totalLevels += rangGained - startRangeLevel;
+            totalLevels += rangGained - START_RANGE_LEVEL;
         }
         final int magGained = Skill.MAGIC.getRealLevel();
         if (magGained > 99 == false) {
-            totalLevels += magGained - startMagicLevel;
+            totalLevels += magGained - START_MAGIC_LEVEL;
         }
         return String.valueOf(totalLevels);
     }
 
     private String getXpGained() {
         int totalXpGained = 0;
-        final int hpGained = Skill.HITPOINTS.getExperience() - startHpExp;
+        final int hpGained = Skill.HITPOINTS.getExperience() - START_HP_EXP;
         totalXpGained += hpGained;
-        final int attGained = Skill.ATTACK.getExperience() - startAttackExp;
+        final int attGained = Skill.ATTACK.getExperience() - START_ATTACK_EXP;
         totalXpGained += attGained;
-        final int strGained = Skill.STRENGTH.getExperience() - startStrengthExp;
+        final int strGained = Skill.STRENGTH.getExperience() - START_STRENGTH_EXP;
         totalXpGained += strGained;
-        final int defGained = Skill.DEFENSE.getExperience() - startDefenceExp;
+        final int defGained = Skill.DEFENSE.getExperience() - START_DEFENCE_EXP;
         totalXpGained += defGained;
-        final int rangGained = Skill.RANGE.getExperience() - startRangeExp;
+        final int rangGained = Skill.RANGE.getExperience() - START_RANGE_EXP;
         totalXpGained += rangGained;
-        final int magGained = Skill.MAGIC.getExperience() - startMagicExp;
+        final int magGained = Skill.MAGIC.getExperience() - START_MAGIC_EXP;
         totalXpGained += magGained;
         return String.valueOf(totalXpGained);
 
