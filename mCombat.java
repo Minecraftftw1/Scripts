@@ -46,6 +46,8 @@ public class mCombat extends Script implements Paintable {
     private static final int[] lootIds = new int[30];
 
     private static String status = "Starting.";
+    private final long startTime = System.currentTimeMillis();
+    
     private final int START_HP_LEVEL = Skill.HITPOINTS.getRealLevel();
     private final int START_ATTACK_LEVEL = Skill.ATTACK.getRealLevel();
     private final int START_STRENGTH_LEVEL = Skill.STRENGTH.getRealLevel();
@@ -81,7 +83,6 @@ public class mCombat extends Script implements Paintable {
 
     }
 
-    //START: Code generated using Enfilade's Easel
     private final RenderingHints antialiasing = new RenderingHints(
             RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -92,8 +93,6 @@ public class mCombat extends Script implements Paintable {
             return null;
         }
     }
-
-    private final long startTime = System.currentTimeMillis();
 
     private String getTime() {
         DecimalFormat df = new DecimalFormat("00");
@@ -148,7 +147,6 @@ public class mCombat extends Script implements Paintable {
         final int magGained = Skill.MAGIC.getExperience() - START_MAGIC_EXP;
         totalXpGained += magGained;
         return String.valueOf(totalXpGained);
-
     }
 
     private String getXpPerHour() {
@@ -158,10 +156,7 @@ public class mCombat extends Script implements Paintable {
         final long second = millis / 1000;
         final long xpPerHour = ((gainedXp / second) * 60) * 60;
         return df.format(xpPerHour);
-
     }
-
-    // private String 
 
     private final Color color1 = new Color(255, 255, 255);
 
@@ -192,7 +187,6 @@ public class mCombat extends Script implements Paintable {
         g.drawString("Levels gained: " + gainedLevels, 390, 413);
         g.drawString("XP per hour: " + xpPerHour, 197, 413);
     }
-    //END: Code generated using Enfilade's Easel
 
     public class Fight implements Strategy {
 
