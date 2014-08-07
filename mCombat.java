@@ -34,7 +34,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 
 @ScriptManifest(author = "MinecraftFtw", category = Category.COMBAT, description = "AIO Combat script.", name = "mCombat", servers = {
-    "Ikov"
+    "Ikov, UltimateScape, PKHonor"
 }, version = 1.6)
 public class mCombat extends Script implements Paintable {
 
@@ -76,11 +76,6 @@ public class mCombat extends Script implements Paintable {
         startPanel.dispose();
         provide(strategies);
         return true;
-    }
-
-    @Override
-    public void onFinish() {
-
     }
 
     private final RenderingHints antialiasing = new RenderingHints(
@@ -198,11 +193,7 @@ public class mCombat extends Script implements Paintable {
             if (!Players.getMyPlayer().isInCombat()) {
                 enemy = nextEnemy();
             }
-            if (enemy != null && !Players.getMyPlayer().isInCombat()) {
-                return true;
-            } else {
-                return false;
-            }
+            return enemy != null && !Players.getMyPlayer().isInCombat();
         }
 
         @Override
@@ -218,13 +209,13 @@ public class mCombat extends Script implements Paintable {
 
                 @Override
                 public boolean isValid() {
-                    return Players.getMyPlayer().isInCombat() || Players.getMyPlayer().getAnimation() != -1 && enemy.isInCombat() && !Players.getMyPlayer().isInCombat();
+                    return Players.getMyPlayer().isInCombat() || enemy.isInCombat() && !Players.getMyPlayer().isInCombat();
                 }
-            }, 5050);
+            }, 5750);
 
             Time.sleep(1800, 2050);
 
-            if (enemy.isInCombat() && Players.getMyPlayer().isInCombat()) {
+            if (Players.getMyPlayer().isInCombat()) {
 
                 Time.sleep(new SleepCondition() {
 
@@ -259,11 +250,7 @@ public class mCombat extends Script implements Paintable {
             levelOfHP = Skill.HITPOINTS.getRealLevel();
             eatPoints = (int)((levelOfHP / 10) * 6);
 
-            if (currentHP != 0 && currentHP <= eatPoints) {
-                return true;
-            } else {
-                return false;
-            }
+            return currentHP != 0 && currentHP <= eatPoints;
         }
 
         @Override
@@ -292,11 +279,7 @@ public class mCombat extends Script implements Paintable {
         @Override
         public boolean activate() {
             toLoot = nextLoot();
-            if (toLoot != null && Inventory.getCount() != 28) {
-                return true;
-            } else {
-                return false;
-            }
+            return toLoot != null && Inventory.getCount() != 28;
         }
 
         @Override
@@ -331,7 +314,7 @@ public class mCombat extends Script implements Paintable {
                 }
             }
         } catch (Exception e) {
-            System.out.println(String.valueOf(e));
+            e.printStackTrace();
             Time.sleep(2500);
             nextEnemy();
         }
@@ -347,7 +330,7 @@ public class mCombat extends Script implements Paintable {
                 }
             }
         } catch (Exception e) {
-            System.out.println(String.valueOf(e));
+            e.printStackTrace();
             Time.sleep(2500);
             nextLoot();
         }
@@ -701,17 +684,16 @@ public class mCombat extends Script implements Paintable {
             for (int i = 0; i < fightList.getModel().getSize(); i++) {
                 String fightListString = fightListModel.getElementAt(i).toString();
                 if (fightListString != null) {
-                    int startPosition = fightListString.indexOf("- (") + "- (".length();
-                    int endPosition = fightListString.indexOf(")", startPosition);
-                    npcIds[i] = Integer.parseInt(fightListString.substring(startPosition, endPosition));
-                    // System.out.println("NPC ID from startButtonActionPerformed: " + String.valueOf(Integer.parseInt(fightListString.substring(startPosition, endPosition))));
+                    // int startPosition = fightListString.indexOf("- (") + "- (".length();
+                    // int endPosition = fightListString.indexOf(")", startPosition);
+                    // npcIds[i] = Integer.parseInt(fightListString.substring(startPosition, endPosition));
+                    npcIds[i] = Integer.parseInt(fightListString.replace("Npc ID: ", ""));
                 }
             }
             for (int l = 0; l < lootList.getModel().getSize(); l++) {
                 String lootListString = lootListModel.getElementAt(l).toString();
                 if (lootListString != null) {
                     lootIds[l] = Integer.parseInt(lootListString) - 1;
-                    // System.out.println("Loot ID from startButtonActionPerformed: " + String.valueOf(lootIds[l]));
                 }
             }
         } //GEN-LAST:event_startButtonActionPerformed
@@ -848,41 +830,6 @@ public class mCombat extends Script implements Paintable {
             }
         }    
 
-        /**
-         * @param args the command line arguments
-         */
-        public static void main(String args[]) {
-            /* Set the Nimbus look and feel */
-            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-             * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-             */
-            try {
-                for (javax.swing.UIManager.LookAndFeelInfo info: javax.swing.UIManager.getInstalledLookAndFeels()) {
-                    if ("Default".equals(info.getName())) {
-                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                        break;
-                    }
-                }
-            } catch (ClassNotFoundException ex) {
-                java.util.logging.Logger.getLogger(BotGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                java.util.logging.Logger.getLogger(BotGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                java.util.logging.Logger.getLogger(BotGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-                java.util.logging.Logger.getLogger(BotGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-            }
-            //</editor-fold>
-
-            /* Create and display the form */
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new BotGUI().setVisible(true);
-                }
-            });
-        }
-
         private void loadSaves() {
             try {
                 savesListModel.clear();
@@ -915,11 +862,9 @@ public class mCombat extends Script implements Paintable {
                     for (int i = 0; i < npcIds.length; i++) {
                         npcIds[i] = 0;
                     }
-                    // System.out.println("Cleared id's");
                 }
                 for (String item : npcListStr) {
                     nearestNpcListModel.addElement(item);
-                    // System.out.println("Adding to loaded: " + item);
                 }
             } catch (Exception e) {
                 String text = "Could not add nearest Npc's to list.";
@@ -928,26 +873,34 @@ public class mCombat extends Script implements Paintable {
         }
 
         private void loadNpc() {
-            Npc[] loadListObj = Npcs.getNearest();
+            Npc[] loadList = Npcs.getNearest();
             npcListStr.clear();
             try {
-                BufferedReader lineReader = new BufferedReader(new FileReader("npcList.txt"));
-                String line;
-                while ((line = lineReader.readLine()) != null) {
-                    for (int i = 0; i < loadListObj.length; i++) {
-                        int idEndPosition = line.indexOf(" -");
-                        if (line.substring(0, idEndPosition).equals(String.valueOf(loadListObj[i].getDef().getId()))) {
-                            int nameStartPosition = line.indexOf("- ") + "- ".length();
-                            String nameOfNpc = line.substring(nameStartPosition);
-                            npcListStr.add(nameOfNpc + " - (" + loadListObj[i].getDef().getId() + ")");
-                        }
-                    }
+                for (int i = 0; i < loadList.length; i++) {
+                    npcListStr.add("Npc ID: " + loadList[i].getDef().getId());
                 }
-                lineReader.close();
             } catch (Exception e) {
                 String text = "Could not load nearest Npc's.";
                 JOptionPane.showMessageDialog(this, text, "Npc error", JOptionPane.ERROR_MESSAGE);
             }
+            // try {
+            //     BufferedReader lineReader = new BufferedReader(new FileReader("npcList.txt"));
+            //     String line;
+            //     while ((line = lineReader.readLine()) != null) {
+            //         for (int i = 0; i < loadList.length; i++) {
+            //             int idEndPosition = line.indexOf(" -");
+            //             if (line.substring(0, idEndPosition).equals(String.valueOf(loadList[i].getDef().getId()))) {
+            //                 int nameStartPosition = line.indexOf("- ") + "- ".length();
+            //                 String nameOfNpc = line.substring(nameStartPosition);
+            //                 npcListStr.add(nameOfNpc + " - (" + loadList[i].getDef().getId() + ")");
+            //             }
+            //         }
+            //     }
+            //     lineReader.close();
+            // } catch (Exception e) {
+            //     String text = "Could not load nearest Npc's.";
+            //     JOptionPane.showMessageDialog(this, text, "Npc error", JOptionPane.ERROR_MESSAGE);
+            // }
         }
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
