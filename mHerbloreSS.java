@@ -1,9 +1,10 @@
-package org.parabot.minecraftftw.mHerbloreSS.main;
+//package org.parabot.minecraftftw.mHerbloreSS.main;
 
 /*
  * Copyright minecraftftw 2014.
  */
 
+import org.parabot.environment.api.interfaces.Paintable;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.api.utils.Timer;
 import org.parabot.environment.scripts.Category;
@@ -11,10 +12,8 @@ import org.parabot.environment.scripts.Script;
 import org.parabot.environment.scripts.ScriptManifest;
 import org.parabot.environment.scripts.framework.SleepCondition;
 import org.parabot.environment.scripts.framework.Strategy;
-import org.soulsplit.api.methods.Bank;
-import org.soulsplit.api.methods.Inventory;
+import org.soulsplit.api.methods.*;
 import org.soulsplit.api.methods.Menu;
-import org.soulsplit.api.methods.SceneObjects;
 import org.soulsplit.api.wrappers.Item;
 import org.soulsplit.api.wrappers.SceneObject;
 
@@ -26,17 +25,20 @@ import java.util.ArrayList;
 
 @ScriptManifest(author = "minecraftftw", category = Category.HERBLORE, description = "AIO Herblore script.", name = "mHerbloreSS", servers = {
         "Soulsplit"
-}, version = 0.75)
+}, version = 0.76)
 
-public class mHerbloreSS extends Script {
+public class mHerbloreSS extends Script implements Paintable {
 
-    Timer timer = new Timer();
+    HerbTimer timer = new HerbTimer();
 
     private final ArrayList<Strategy> strategies = new ArrayList<Strategy>();
 
     private static Potions myPot;
 
     private static final int WATER_VIAL = 228;
+    
+    private static int unfMade = 0;
+    private static int finMade = 0;
 
     @Override
     public boolean onExecute() {
@@ -44,7 +46,12 @@ public class mHerbloreSS extends Script {
         Gui main = new Gui();
 
         while (myPot == null) {
-            Time.sleep(250, 350);
+            Time.sleep(new SleepCondition() {
+                @Override
+                public boolean isValid() {
+                    return myPot != null;
+                }
+            }, 350);
         }
 
         main.dispose();
@@ -53,6 +60,37 @@ public class mHerbloreSS extends Script {
         provide(strategies);
         return true;
     }
+
+    //START: Code generated using Enfilade's Easel
+    private final Color color1 = new Color(77, 255, 0, 79);
+    private final Color color2 = new Color(0, 0, 0);
+    private final Color color3 = new Color(255, 255, 255);
+
+    private final BasicStroke stroke1 = new BasicStroke(1);
+
+    private final Font font1 = new Font("Arial", 0, 16);
+    private final Font font2 = new Font("Arial", 0, 12);
+
+    final int NEW_Y = 57;
+
+    public void paint(Graphics g1) {
+        Graphics2D g = (Graphics2D)g1;
+        g.setColor(color1);
+        g.fillRect(546, 208 + NEW_Y, 190, 163);
+        g.setColor(color2);
+        g.setStroke(stroke1);
+        g.drawRect(546, 208 + NEW_Y, 190, 163);
+        g.setFont(font1);
+        g.setColor(color3);
+        g.drawString("mHerbloreSS", 558, 229 + NEW_Y);
+        g.setFont(font2);
+        g.drawString("Run time: " + timer.toString(), 558, 260 + NEW_Y);
+        g.drawString("Unf Potions made: " + timer.formatNumb(timer.getUnfMade()) + " ( " + timer.formatNumb(timer.getPerHour((timer.getUnfMade()))) + " /h)", 558, 284 + NEW_Y);
+        g.drawString("Fin Potions made: " + timer.formatNumb(timer.getFinMade()) + " ( " + timer.formatNumb(timer.getPerHour((timer.getFinMade()))) + " /h)", 558, 308 + NEW_Y);
+        g.drawString("Xp Gained: " + timer.formatNumb(timer.getXpGained()) + " ( " + timer.formatNumb(timer.getPerHour((timer.getXpGained()))) + " /h)", 558, 332 + NEW_Y);
+        g.drawString("Levels Gained: " + timer.formatNumb(timer.getLevelsGained()) + " ( " + timer.formatNumb(timer.getPerHour((timer.getLevelsGained()))) + " /h)", 560, 356 + NEW_Y);
+    }
+    //END: Code generated using Enfilade's Easel
 
     public class OpenBank implements Strategy {
 
@@ -222,6 +260,60 @@ public class mHerbloreSS extends Script {
         return nearestObjects.length > 0;
     }
 
+    public class HerbTimer extends Timer {
+
+        private final int START_LEVEL = Skill.HERBLORE.getRealLevel();
+        private final int START_EXP = Skill.HERBLORE.getExperience();
+        private int CURRENT_LEVEL = Skill.HERBLORE.getRealLevel();
+        private int CURRENT_EXP = Skill.HERBLORE.getExperience();
+
+        public HerbTimer() {
+        }
+
+        public String formatNumb(int number) {
+            String numberString = String.valueOf(number);
+            if (Integer.parseInt(numberString) < 1000) {
+                return numberString;
+            } else if (Integer.parseInt(numberString) > 1000 && Integer.parseInt(numberString) < 10000) {
+                return numberString.charAt(0) + "." + numberString.charAt(1) + "K";
+            } else if (Integer.parseInt(numberString) > 10000 && Integer.parseInt(numberString) < 100000) {
+                return numberString.substring(0, 2) + "." + numberString.charAt(2) + "K";
+            } else if (Integer.parseInt(numberString) > 100000 && Integer.parseInt(numberString) < 1000000) {
+                return numberString.substring(0, 3) + "." + numberString.charAt(3) + "K";
+            } else if (Integer.parseInt(numberString) > 1000000 && Integer.parseInt(numberString) < 10000000) {
+                return numberString.charAt(0) + "." + numberString.charAt(1) + "M";
+            } else if (Integer.parseInt(numberString) > 10000000 && Integer.parseInt(numberString) < 100000000) {
+                return numberString.substring(0, 2) + "." + numberString.charAt(2) + "M";
+            } else if (Integer.parseInt(numberString) > 100000000 && Integer.parseInt(numberString) < 1000000000) {
+                return numberString.substring(0, 3) + "." + numberString.charAt(3) + "M";
+            } else if (Long.valueOf(numberString) > 1000000000L && Long.valueOf(numberString) < 10000000000L) {
+                return numberString.charAt(0) + "." + numberString.charAt(1) + "B";
+            } else if (Long.valueOf(numberString) > 10000000000L && Long.valueOf(numberString) < 100000000000L) {
+                return numberString.substring(0, 2) + "." + numberString.charAt(2) + "B";
+            } else {
+                return numberString;
+            }
+        }
+        
+        public int getUnfMade() {
+            return unfMade;
+        }
+        
+        public int getFinMade() {
+            return finMade;
+        }
+
+        public int getLevelsGained() {
+            CURRENT_LEVEL = Skill.HERBLORE.getRealLevel() - START_LEVEL;
+            return CURRENT_LEVEL;
+        }
+
+        public int getXpGained() {
+            CURRENT_EXP = Skill.HERBLORE.getExperience() - START_EXP;
+            return CURRENT_EXP;
+        }
+    }
+
     public enum Potions {
 
         ATTACK(250, 222, 92, 122, 1),
@@ -333,8 +425,9 @@ public class mHerbloreSS extends Script {
                     Menu.sendAction(870, herbId - 1, herbItem.getSlot(), 3214);
                     Time.sleep(130, 150);
                 }
+                unfMade += Inventory.getCount(unfinId);
+                Time.sleep(300, 350);
                 Bank.depositAll();
-                Time.sleep(300, 400);
             } catch (ArrayIndexOutOfBoundsException e) {
                 Bank.depositAll();
             }
@@ -351,7 +444,8 @@ public class mHerbloreSS extends Script {
                     Menu.sendAction(870, unfinId - 1, unfPotItem.getSlot(), 3214);
                     Time.sleep(130, 150);
                 }
-                Time.sleep(300, 400);
+                finMade += Inventory.getCount(finId);
+                Time.sleep(300, 350);
                 Bank.depositAll();
             } catch (ArrayIndexOutOfBoundsException e) {
                 Bank.depositAll();
@@ -369,7 +463,8 @@ public class mHerbloreSS extends Script {
                     Menu.sendAction(870, herbId - 1, herbItem.getSlot(), 3214);
                     Time.sleep(130, 150);
                 }
-                Time.sleep(300, 400);
+                finMade += Inventory.getCount(finId);
+                Time.sleep(300, 350);
                 Bank.depositAll();
             } catch (ArrayIndexOutOfBoundsException e) {
                 Bank.depositAll();
@@ -428,7 +523,7 @@ public class mHerbloreSS extends Script {
             mainPanel.add(potionList);
             mainPanel.add(startButton);
 
-            mainFrame = new JFrame("Choose your potion - Version 0.75");
+            mainFrame = new JFrame("Choose your potion - Version 0.76");
             mainFrame.add(mainPanel);
             mainFrame.setBounds(523, 334, 300, 170);
             mainFrame.setResizable(false);
@@ -436,11 +531,11 @@ public class mHerbloreSS extends Script {
             mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         }
 
-        private void dispose() {
+        public void dispose() {
             this.mainFrame.dispose();
         }
 
-        private boolean isVisible() {
+        public boolean isVisible() {
             return this.mainFrame.isVisible();
         }
     }
