@@ -264,10 +264,10 @@ public class mHerbloreSS extends Script implements Paintable {
 
         private final int START_LEVEL = Skill.HERBLORE.getRealLevel();
         private final int START_EXP = Skill.HERBLORE.getExperience();
-        private int CURRENT_LEVEL = Skill.HERBLORE.getRealLevel();
-        private int CURRENT_EXP = Skill.HERBLORE.getExperience();
 
         public HerbTimer() {
+            System.out.println("Start level " + START_LEVEL);
+            System.out.println("Start xp " + START_EXP);
         }
 
         public String formatNumb(int number) {
@@ -304,13 +304,13 @@ public class mHerbloreSS extends Script implements Paintable {
         }
 
         public int getLevelsGained() {
-            CURRENT_LEVEL = Skill.HERBLORE.getRealLevel() - START_LEVEL;
-            return CURRENT_LEVEL;
+            final int levelsGained = Skill.HERBLORE.getRealLevel() - START_LEVEL;
+            return levelsGained;
         }
 
         public int getXpGained() {
-            CURRENT_EXP = Skill.HERBLORE.getExperience() - START_EXP;
-            return CURRENT_EXP;
+            final int xpGained = Skill.HERBLORE.getExperience() - START_EXP;
+            return xpGained;
         }
     }
 
@@ -424,8 +424,8 @@ public class mHerbloreSS extends Script implements Paintable {
                     Time.sleep(130, 150);
                     Menu.sendAction(870, herbId - 1, herbItem.getSlot(), 3214);
                     Time.sleep(130, 150);
+                    unfMade++;
                 }
-                unfMade += Inventory.getCount(unfinId);
                 Time.sleep(300, 400);
                 Bank.depositAll();
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -443,8 +443,8 @@ public class mHerbloreSS extends Script implements Paintable {
                     Time.sleep(130, 150);
                     Menu.sendAction(870, unfinId - 1, unfPotItem.getSlot(), 3214);
                     Time.sleep(130, 150);
+                    finMade++;
                 }
-                finMade += Inventory.getCount(finId);
                 Time.sleep(300, 400);
                 Bank.depositAll();
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -462,8 +462,8 @@ public class mHerbloreSS extends Script implements Paintable {
                     Time.sleep(130, 150);
                     Menu.sendAction(870, herbId - 1, herbItem.getSlot(), 3214);
                     Time.sleep(130, 150);
+                    finMade++;
                 }
-                finMade += Inventory.getCount(finId);
                 Time.sleep(300, 400);
                 Bank.depositAll();
             } catch (ArrayIndexOutOfBoundsException e) {
