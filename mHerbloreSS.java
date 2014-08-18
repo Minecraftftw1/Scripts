@@ -1,4 +1,4 @@
-//package org.parabot.minecraftftw.mHerbloreSS.main;
+package org.parabot.minecraftftw.mHerbloreSS.main;
 
 /*
  * Copyright minecraftftw 2014.
@@ -426,7 +426,7 @@ public class mHerbloreSS extends Script implements Paintable {
                     Time.sleep(130, 150);
                 }
                 unfMade += Inventory.getCount(unfinId);
-                Time.sleep(300, 350);
+                Time.sleep(300, 400);
                 Bank.depositAll();
             } catch (ArrayIndexOutOfBoundsException e) {
                 Bank.depositAll();
@@ -445,7 +445,7 @@ public class mHerbloreSS extends Script implements Paintable {
                     Time.sleep(130, 150);
                 }
                 finMade += Inventory.getCount(finId);
-                Time.sleep(300, 350);
+                Time.sleep(300, 400);
                 Bank.depositAll();
             } catch (ArrayIndexOutOfBoundsException e) {
                 Bank.depositAll();
@@ -464,7 +464,7 @@ public class mHerbloreSS extends Script implements Paintable {
                     Time.sleep(130, 150);
                 }
                 finMade += Inventory.getCount(finId);
-                Time.sleep(300, 350);
+                Time.sleep(300, 400);
                 Bank.depositAll();
             } catch (ArrayIndexOutOfBoundsException e) {
                 Bank.depositAll();
@@ -509,7 +509,7 @@ public class mHerbloreSS extends Script implements Paintable {
                         try {
                             myPot = mHerbloreSS.Potions.values()[potionList.getSelectedIndex()];
                         } catch (Exception err) {
-                            Time.sleep(300, 350);
+                            Time.sleep(300, 400);
                             err.printStackTrace();
                         }
                     } else if (!isLoggedIn()) {
